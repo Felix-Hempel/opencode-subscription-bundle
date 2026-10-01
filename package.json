@@ -1,0 +1,12 @@
+{
+  "name": "opencode-subscription-bundle",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "test": "bun test",
+    "lint": "bun scripts/static-check.mjs",
+    "verify": "bun run lint && bun run test"
+  }
+}

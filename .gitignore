@@ -1,0 +1,14 @@
+node_modules/
+.cache/
+.local/
+.env
+.env.*
+auth.json
+auth.json.*
+*.gpg
+*.asc
+*.pem
+*.key
+*.tmp
+coverage/
+.DS_Store

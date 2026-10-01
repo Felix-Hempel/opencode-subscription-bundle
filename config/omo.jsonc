@@ -1,0 +1,209 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/v5.1.7/assets/omo.schema.json",
+  "[opencode]": {
+    "telemetry": false,
+    "model_fallback": false,
+    "runtime_fallback": {
+      "enabled": true,
+      "retry_on_errors": [400, 401, 402, 403, 404, 429, 500, 502, 503, 504],
+      "max_fallback_attempts": 5,
+      "cooldown_seconds": 60,
+      "timeout_seconds": 60,
+      "notify_on_fallback": true,
+      "restore_primary_after_cooldown": true
+    },
+    "background_task": {
+      "defaultConcurrency": 4,
+      "providerConcurrency": { "anthropic": 2, "openai": 2, "opencode-go": 4 },
+      "modelConcurrency": { "anthropic/claude-opus-5-5": 2, "openai/gpt-6-astra": 1 },
+      "maxDepth": 2,
+      "maxLiveDescendantsPerRoot": 8,
+      "staleTimeoutMs": 300000,
+      "messageStalenessTimeoutMs": 180000,
+      "maxToolCalls": 120,
+      "circuitBreaker": { "enabled": true, "maxToolCalls": 120, "consecutiveThreshold": 8 }
+    },
+    "agents": {
+      "sisyphus": {
+        "models": [
+          { "model": "anthropic/claude-opus-5-5", "reasoning": "max" },
+          { "model": "openai/gpt-6.1-sol", "reasoning": "high" },
+          { "model": "openai/gpt-6-astra", "reasoning": "high" },
+          { "model": "openai/gpt-5.6-sol", "reasoning": "high" },
+          { "model": "opencode-go/kimi-k3", "reasoning": "max" },
+          { "model": "opencode-go/glm-5.3", "reasoning": "max" }
+        ],
+        "prompt_append": "file:///home/opencode/.config/opencode/router/orchestration.md"
+      },
+      "prometheus": {
+        "models": [
+          { "model": "anthropic/claude-opus-5-5", "reasoning": "max" },
+          { "model": "openai/gpt-6.1-sol", "reasoning": "high" },
+          { "model": "openai/gpt-6-astra", "reasoning": "high" },
+          { "model": "openai/gpt-5.6-sol", "reasoning": "high" },
+          { "model": "opencode-go/kimi-k3", "reasoning": "max" }
+        ],
+        "prompt_append": "file:///home/opencode/.config/opencode/router/orchestration.md"
+      },
+      "atlas": {
+        "models": [
+          { "model": "anthropic/claude-opus-5-5", "reasoning": "high" },
+          { "model": "openai/gpt-6.1-sol", "reasoning": "high" },
+          { "model": "openai/gpt-6-astra", "reasoning": "high" },
+          { "model": "opencode-go/kimi-k3", "reasoning": "max" }
+        ],
+        "prompt_append": "file:///home/opencode/.config/opencode/router/orchestration.md"
+      },
+      "hephaestus": {
+        "models": [
+          { "model": "openai/gpt-6.1-sol", "reasoning": "high" },
+          { "model": "openai/gpt-5.6-sol", "reasoning": "high" },
+          { "model": "openai/gpt-6-astra", "reasoning": "high" }
+        ],
+        "prompt_append": "file:///home/opencode/.config/opencode/router/orchestration.md"
+      },
+      "oracle": {
+        "models": [
+          { "model": "openai/gpt-6-astra", "reasoning": "max" },
+          { "model": "anthropic/claude-opus-5-5", "reasoning": "max" },
+          { "model": "openai/gpt-6.1-sol", "reasoning": "high" },
+          { "model": "opencode-go/kimi-k3", "reasoning": "max" }
+        ]
+      },
+      "metis": {
+        "models": [
+          { "model": "anthropic/claude-opus-5-5", "reasoning": "high" },
+          { "model": "openai/gpt-6.1-sol", "reasoning": "high" },
+          { "model": "openai/gpt-6-astra", "reasoning": "high" }
+        ]
+      },
+      "momus": {
+        "models": [
+          { "model": "openai/gpt-6-astra", "reasoning": "high" },
+          { "model": "openai/gpt-6.1-sol", "reasoning": "high" },
+          { "model": "anthropic/claude-opus-5-5", "reasoning": "max" }
+        ]
+      },
+      "explore": {
+        "models": ["opencode-go/mimo-v2.6-flash", { "model": "opencode-go/deepseek-v4.1-flash", "reasoning": "low" }, "opencode-go/qwen3.7-plus", { "model": "openai/gpt-6-luna", "reasoning": "low" }, "anthropic/claude-haiku-4-5"],
+        "prompt_append": "Gezielte read-only Recherche. Liefere höchstens 800 Wörter: Pfade, Symbole, relevante Zeilen, bestehende Patterns, Tests und offene Fragen. Keine Rohdatenflut."
+      },
+      "librarian": {
+        "models": ["opencode-go/mimo-v2.6-flash", { "model": "opencode-go/deepseek-v4.1-flash", "reasoning": "low" }, "opencode-go/qwen3.7-plus", { "model": "openai/gpt-6-luna", "reasoning": "low" }, "anthropic/claude-haiku-4-5"],
+        "prompt_append": "Verwende aktuelle offizielle Quellen. Liefere kompakte Ergebnisse mit URLs, Versionen und konkreten API-/Schemaschlüssen."
+      },
+      "multimodal-looker": {
+        "models": [
+          { "model": "opencode-go/glm-5.3-flash", "reasoning": "low" },
+          { "model": "opencode-go/deepseek-v4.1-flash", "reasoning": "low" },
+          { "model": "opencode-go/kimi-k3", "reasoning": "max" },
+          { "model": "openai/gpt-6.1-sol", "reasoning": "medium" },
+          { "model": "anthropic/claude-sonnet-5-5", "reasoning": "medium" }
+        ]
+      },
+      "sisyphus-junior": {
+        "models": [
+          { "model": "anthropic/claude-sonnet-5-5", "reasoning": "high" },
+          { "model": "openai/gpt-6.1-sol", "reasoning": "high" },
+          { "model": "anthropic/claude-opus-5-5", "reasoning": "high" },
+          { "model": "openai/gpt-6-astra", "reasoning": "high" },
+          { "model": "opencode-go/kimi-k3", "reasoning": "max" },
+          { "model": "opencode-go/glm-5.3", "reasoning": "max" }
+        ],
+        "prompt_append": "Bei zwei gescheiterten Ansätzen, Security, Concurrency oder neuen Architekturentscheidungen sofort ESCALATE mit kompaktem Context-Pack melden. Nicht endlos weiterprobieren."
+      }
+    },
+    "categories": {
+      "quick": {
+        "model": "opencode-go/glm-5.3-flash", "reasoning": "low",
+        "fallback_models": [{ "model": "opencode-go/deepseek-v4.1-flash", "reasoning": "low" }, { "model": "openai/gpt-6-luna", "reasoning": "low" }, "anthropic/claude-haiku-4-5", "opencode-go/mimo-v2.6-flash"],
+        "description": "Mechanische Single-File-Änderungen, Typos, Renames, Boilerplate; keine Architektur- oder Security-Entscheidungen.",
+        "prompt_append": "Bleibe im klar bestimmten Scope. Keine Architektur erfinden. Bei Unsicherheit ESCALATE mit Pfaden und konkreter offener Frage."
+      },
+      "implementation": {
+        "model": "anthropic/claude-sonnet-5-5", "reasoning": "high",
+        "fallback_models": [{ "model": "openai/gpt-6.1-sol", "reasoning": "high" }, { "model": "openai/gpt-5.6-sol", "reasoning": "high" }, { "model": "anthropic/claude-opus-5-5", "reasoning": "high" }, { "model": "opencode-go/kimi-k3", "reasoning": "max" }, { "model": "opencode-go/glm-5.3", "reasoning": "max" }],
+        "description": "Normale Features, Backend, Formulare, Refactors und Tests: Sonnet 5.5. Rein mechanische Pattern-Kopien an mechanical; schwierige Senior-Arbeit an deep-low.",
+        "prompt_append": "Nach zwei fehlgeschlagenen Ansätzen oder sofort bei Security, Concurrency, Datenmodelländerung oder Architekturunsicherheit ESCALATE: Diff, Pfade, Checks, offene Entscheidung."
+      },
+      "unspecified-low": {
+        "model": "anthropic/claude-sonnet-5-5", "reasoning": "high",
+        "fallback_models": [{ "model": "openai/gpt-6.1-sol", "reasoning": "high" }, { "model": "openai/gpt-5.6-sol", "reasoning": "high" }, { "model": "opencode-go/kimi-k3", "reasoning": "max" }, { "model": "opencode-go/glm-5.3", "reasoning": "max" }],
+        "description": "Normale entscheidungsintensive Implementation mit Sonnet 5.5; schwierige Architektur an Opus/deep-high eskalieren."
+      },
+      "visual-engineering": {
+        "model": "anthropic/claude-sonnet-5-5", "reasoning": "high",
+        "fallback_models": [{ "model": "openai/gpt-6.1-sol", "reasoning": "high" }, { "model": "opencode-go/glm-5.3-flash", "reasoning": "high" }, { "model": "opencode-go/deepseek-v4.1-flash", "reasoning": "high" }, { "model": "anthropic/claude-opus-5-5", "reasoning": "high" }],
+        "description": "Normale Frontend-Features mit Sonnet 5.5. Mechanisches CSS/Layout an visual-quick; komplexen State an deep-low/deep-high. Bildinput unterstützt."
+      },
+      "deep-low": {
+        "model": "openai/gpt-6.1-sol", "reasoning": "high",
+        "fallback_models": [{ "model": "openai/gpt-5.6-sol", "reasoning": "high" }, { "model": "anthropic/claude-opus-5-5", "reasoning": "high" }, { "model": "opencode-go/kimi-k3", "reasoning": "max" }],
+        "description": "Senior-Ausführung eines klaren Ziels mit Entscheidungen, die aus Repository-Evidenz ableitbar sind."
+      },
+      "deep-high": {
+        "model": "anthropic/claude-opus-5-5", "reasoning": "max",
+        "fallback_models": [{ "model": "openai/gpt-6.1-sol", "reasoning": "high" }, { "model": "openai/gpt-6-astra", "reasoning": "max" }, { "model": "openai/gpt-5.6-sol", "reasoning": "high" }, { "model": "opencode-go/kimi-k3", "reasoning": "max" }],
+        "description": "Concurrency, Race Conditions, Architektur, verteilte Systeme, schwierige Root-Cause-Analyse; kein Flash."
+      },
+      "unspecified-high": {
+        "model": "anthropic/claude-opus-5-5", "reasoning": "high",
+        "fallback_models": [{ "model": "openai/gpt-6.1-sol", "reasoning": "high" }, { "model": "openai/gpt-6-astra", "reasoning": "high" }, { "model": "opencode-go/kimi-k3", "reasoning": "max" }]
+      },
+      "ultrabrain": {
+        "model": "openai/gpt-6-astra", "reasoning": "max",
+        "fallback_models": [{ "model": "anthropic/claude-opus-5-5", "reasoning": "max" }, { "model": "openai/gpt-6.1-sol", "reasoning": "high" }, { "model": "opencode-go/kimi-k3", "reasoning": "max" }],
+        "description": "Extrem schwieriges Reasoning und unabhängige Architekturberatung; nicht für normale Aufgaben."
+      },
+      "architect": {
+        "model": "openai/gpt-6-astra", "reasoning": "max",
+        "fallback_models": [{ "model": "anthropic/claude-opus-5-5", "reasoning": "max" }, { "model": "openai/gpt-6.1-sol", "reasoning": "high" }, { "model": "opencode-go/kimi-k3", "reasoning": "max" }, { "model": "opencode-go/glm-5.3", "reasoning": "max" }],
+        "description": "Read-only Architekturberatung und Challenge zentraler Entscheidungen.",
+        "tools": { "edit": false, "write": false, "apply_patch": false, "bash": false }
+      },
+      "security": {
+        "model": "anthropic/claude-opus-5-5", "reasoning": "max",
+        "fallback_models": [{ "model": "openai/gpt-6-astra", "reasoning": "high" }, { "model": "openai/gpt-6.1-sol", "reasoning": "high" }],
+        "description": "Security-kritische Planung und Implementation. Ausschließlich Frontier; separates Familienreview zwingend."
+      },
+      "review-openai": {
+        "model": "openai/gpt-6-astra", "reasoning": "high",
+        "fallback_models": [{ "model": "openai/gpt-6.1-sol", "reasoning": "high" }, { "model": "openai/gpt-5.6-sol", "reasoning": "high" }],
+        "description": "Unabhängiges GPT-Familienreview nach Claude-Implementation; read-only, Findings mit Pfaden/Zeilen.",
+        "tools": { "edit": false, "write": false, "apply_patch": false, "bash": false },
+        "prompt_append": "Reviewe tatsächlichen Code und Diff anhand explizit übergebener Dateien. Liefere Findings, Fehlerfälle, fehlende Tests, Restrisiken. Kein Rubber-Stamp und keine Änderung als sicher bezeichnen."
+      },
+      "review-claude": {
+        "model": "anthropic/claude-opus-5-5", "reasoning": "high",
+        "fallback_models": [{ "model": "anthropic/claude-sonnet-5-5", "reasoning": "high" }],
+        "description": "Unabhängiges Claude-Familienreview nach OpenAI-Implementation; read-only. Bei Familienquota blockierter Review-Gate.",
+        "tools": { "edit": false, "write": false, "apply_patch": false, "bash": false },
+        "prompt_append": "Reviewe tatsächlichen Code und Diff anhand explizit übergebener Dateien. Liefere Findings, Fehlerfälle, fehlende Tests, Restrisiken. Kein Rubber-Stamp und keine Änderung als sicher bezeichnen."
+      },
+      "review-go": {
+        "model": "opencode-go/kimi-k3", "reasoning": "max",
+        "fallback_models": [{ "model": "opencode-go/glm-5.3", "reasoning": "max" }, { "model": "opencode-go/deepseek-v4-pro", "reasoning": "max" }],
+        "description": "Zusätzliche unabhängige Diagnose durch starke Go-Modelle; kein Ersatz für vorgeschriebenes Frontier-Security-Review.",
+        "tools": { "edit": false, "write": false, "apply_patch": false, "bash": false }
+      },
+      "writing": {
+        "model": "opencode-go/glm-5.3-flash", "reasoning": "low",
+        "fallback_models": [{ "model": "openai/gpt-6-luna", "reasoning": "low" }, { "model": "anthropic/claude-sonnet-5-5", "reasoning": "medium" }],
+        "description": "Technische Dokumentation und klare Texte; deutsche Umlaute verwenden."
+      },
+      "mechanical": {
+        "model": "opencode-go/glm-5.3-flash", "reasoning": "high",
+        "fallback_models": [{ "model": "opencode-go/deepseek-v4.1-flash", "reasoning": "high" }, { "model": "openai/gpt-6-luna", "reasoning": "medium" }, { "model": "anthropic/claude-sonnet-5-5", "reasoning": "high" }],
+        "description": "Mechanisch ausführbare Pläne, Boilerplate und bekannte Pattern-Kopien ohne neue Entscheidungen. Bei Unsicherheit sofort implementation/deep-low.",
+        "prompt_append": "Maximal zwei gescheiterte Ansätze; dann ESCALATE mit Pfaden, Diff, Checks und offener Entscheidung."
+      },
+      "visual-quick": {
+        "model": "opencode-go/glm-5.3-flash", "reasoning": "high",
+        "fallback_models": [{ "model": "opencode-go/deepseek-v4.1-flash", "reasoning": "high" }, { "model": "openai/gpt-6-luna", "reasoning": "medium" }, { "model": "anthropic/claude-sonnet-5-5", "reasoning": "high" }],
+        "description": "Mechanisches CSS/Layout und klar definierte kleine Komponentenänderungen; multimodal. Anspruchsvolle UI-Features an visual-engineering."
+      },
+      "artistry": { "disable": true }
+    }
+  },
+  "_migrations": ["2026-08-reasoning-unification", "2026-09-category-deep-split"]
+}

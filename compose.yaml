@@ -1,0 +1,21 @@
+services:
+  opencode:
+    build: .
+    user: "10001:10001"
+    init: true
+    stdin_open: true
+    tty: true
+    working_dir: /workspace
+    environment:
+      HOME: /home/opencode
+      XDG_CONFIG_HOME: /home/opencode/.config
+      XDG_DATA_HOME: /home/opencode/.local/share
+      XDG_STATE_HOME: /home/opencode/.local/state
+      XDG_CACHE_HOME: /home/opencode/.cache
+    volumes:
+      - opencode-home:/home/opencode
+      - ${WORKSPACE:-.}:/workspace
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+volumes:
+  opencode-home:
