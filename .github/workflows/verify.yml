@@ -27,5 +27,7 @@ jobs:
           docker run --rm --entrypoint sh opencode-bundle:test -c 'test "$(id -u)" = 10001 && test "$HOME" = /home/opencode'
           docker run --rm --mount type=volume,source=bundle-qa-home,target=/home/opencode opencode-bundle:test --version
           docker run --rm --mount type=volume,source=bundle-qa-home,target=/home/opencode --entrypoint sh opencode-bundle:test -c 'test -r "$HOME/.omo/omo.jsonc" && test -r "$HOME/.config/opencode/router/subscription-router.js"'
+      - name: Load portable configuration and pinned plugins without accounts
+        run: docker run --rm --mount type=volume,source=bundle-qa-home,target=/home/opencode opencode-bundle:test debug config > /dev/null
       - name: Run offline tests inside container
         run: docker run --rm --entrypoint bun --workdir /opt/bundle opencode-bundle:test run verify

@@ -47,8 +47,9 @@ Deshalb installiert das Dockerfile das exakte Registry-Paket
 `opencode-ai@1.18.34` auf `oven/bun:1.4.2` und prüft beim Build die CLI-Version.
 Keine Curl-Pipe, kein `latest`, kein automatisches CLI-Update. Paketinstallation
 setzt Vertrauen in Registry/Upstream voraus; kein zusätzlicher Supply-Chain-Beweis.
-Docker war bei der lokalen Erstellung nicht verfügbar: **Container-Build und
-Live-Login sind nicht getestet**. Native Install-/Run-Skripte werden bewusst
+Docker ist lokal nicht verfügbar. GitHub Actions prüft Container-Build,
+CLI-Version, Non-root-Ausführung, persistentes HOME, Konfigurations-/Plugin-Start
+und Offline-Tests. **Live-Login ist nicht getestet**. Native Install-/Run-Skripte werden bewusst
 nicht angeboten, damit feste `/home/opencode`-Pfade keine Host-Installation verändern.
 
 ## Eigene Abonnements anmelden
@@ -181,5 +182,8 @@ bun run verify
 `lint`: offline Bun-Syntaxprüfung, JSONC-/Routing-/Pin-/Pfad-Prüfung und Shell-
 Syntaxprüfung; kein umfassender ESLint/Biome-Ersatz. Keine Produktions-Auth gelesen,
 kein Netzwerk-/Live-Modelltest. Für echte Deployments zusätzlich Container bauen,
-Version prüfen und mit eigenen Accounts testen. Ein Familien-Security-Review ist
-vor produktiver Nutzung weiterhin erforderlich; Unit-Tests beweisen keine Sicherheit.
+Version prüfen und mit eigenen Accounts testen. **Security-Review-Gate blockiert:**
+Der unabhängige Claude-Familienreview scheiterte am Providerlimit/Timeout.
+Der Draft-PR ist keine Produktionsfreigabe und wird nicht automatisch gemergt;
+vor produktiver Nutzung muss der Review nachgeholt werden. Unit-Tests beweisen
+keine Sicherheit.
