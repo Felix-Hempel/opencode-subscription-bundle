@@ -16,7 +16,7 @@ ENV PATH="/opt/cli/bin:${PATH}" HOME=/home/opencode \
 COPY config /opt/bundle/config
 COPY router /opt/bundle/router
 COPY scripts /opt/bundle/scripts
-COPY package.json /opt/bundle/package.json
+COPY package.json Dockerfile compose.yaml /opt/bundle/
 USER 10001:10001
 WORKDIR /workspace
 ENTRYPOINT ["/bin/sh", "/opt/bundle/scripts/container-entrypoint.sh"]

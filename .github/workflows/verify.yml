@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
           persist-credentials: false
       - name: Validate Compose
@@ -25,5 +25,7 @@ jobs:
         run: |
           docker run --rm opencode-bundle:test --version
           docker run --rm --entrypoint sh opencode-bundle:test -c 'test "$(id -u)" = 10001 && test "$HOME" = /home/opencode'
+          docker run --rm --mount type=volume,source=bundle-qa-home,target=/home/opencode opencode-bundle:test --version
+          docker run --rm --mount type=volume,source=bundle-qa-home,target=/home/opencode --entrypoint sh opencode-bundle:test -c 'test -r "$HOME/.omo/omo.jsonc" && test -r "$HOME/.config/opencode/router/subscription-router.js"'
       - name: Run offline tests inside container
         run: docker run --rm --entrypoint bun --workdir /opt/bundle opencode-bundle:test run verify
