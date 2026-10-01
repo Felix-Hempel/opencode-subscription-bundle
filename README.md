@@ -6,6 +6,10 @@ Portable **Komposition, kein Fork**: OpenCode **1.18.34**, OmO
 Keine Tokens, kein Modellkatalog, keine persönliche Host-Konfiguration enthalten.
 Lizenzen: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md); MIT gilt nur für eigene Glue-Dateien.
 
+**Status: Draft.** Die Implementierung liegt auf `feat/portable-bundle` und in
+[PR #1](https://github.com/Felix-Hempel/opencode-subscription-bundle/pull/1).
+Der unabhängige Security-Review ist blockiert; keine Produktionsfreigabe.
+
 ## Risiken und Grenzen
 
 - Jeder Nutzer authentifiziert **seine eigenen Abonnements**. Keine fremden
@@ -31,6 +35,8 @@ Voraussetzungen: Docker Engine/Desktop mit Compose v2; Workspace muss UID/GID
 gezielt anpassen). Kein Port, Docker-Socket oder Host-HOME wird eingebunden.
 
 ```sh
+git clone --branch feat/portable-bundle https://github.com/Felix-Hempel/opencode-subscription-bundle.git
+cd opencode-subscription-bundle
 docker compose build
 WORKSPACE=/absoluter/pfad/zum/projekt docker compose run --rm opencode
 ```
