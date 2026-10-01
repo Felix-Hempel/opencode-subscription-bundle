@@ -3,7 +3,7 @@ FROM oven/bun:1.4.2
 USER root
 RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates openssh-client \
     && rm -rf /var/lib/apt/lists/* \
-    && BUN_INSTALL=/opt/cli bun install --global opencode-ai@1.18.34 \
+    && BUN_INSTALL_GLOBAL_DIR=/opt/cli/install/global BUN_INSTALL_BIN=/opt/cli/bin bun install --global opencode-ai@1.18.34 \
     && /opt/cli/bin/opencode --version | grep -Fx '1.18.34' \
     && groupadd --gid 10001 opencode \
     && useradd --uid 10001 --gid 10001 --create-home --home-dir /home/opencode opencode \
